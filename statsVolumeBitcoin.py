@@ -1,4 +1,5 @@
 import json
+import math
 
 class Volume:
 
@@ -15,6 +16,8 @@ class Volume:
         self.etendue = self.etendue()
         self.min = self.min()
         self.max = self.max()
+        self.variance = self.variance()
+        self.ecartType = math.sqrt(self.variance)
 
     def moyenne(self):
         moy = 0
@@ -60,6 +63,13 @@ class Volume:
     def max(self):
         return self.dataSort[-1][1]
 
+    def variance(self):
+        var = 0
+        for i in range(self.nbVal):
+            var += (self.dataVol[i][1]-self.moyenne)**2
+
+        return var/self.nbVal
+
     def getInfo(self):
         return {"Moyenne" : self.moyenne,
                 "Mediane" : self.mediane,
@@ -67,7 +77,9 @@ class Volume:
                 "Quartile 3" : self.quartiles[1],
                 "Etendue" : self.etendue,
                 "Minimum" : self.min,
-                "Maximum" : self.max}
+                "Maximum" : self.max,
+                "Variance" : self.variance,
+                "Ecart-type" : int(self.ecartType)}
 
 vol = Volume()
 print(vol.getInfo())
