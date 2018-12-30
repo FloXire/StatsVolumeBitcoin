@@ -21,6 +21,26 @@ def formatDate(date):
         mois = '12'
     elif mois == 'Nov':
         mois = '11'
+    elif mois == 'Oct':
+        mois = '10'
+    elif mois == 'Sep':
+        mois = '09'
+    elif mois == 'Aug':
+        mois = '08'
+    elif mois == 'Jul':
+        mois = '07'
+    elif mois == 'Jun':
+        mois = '06'
+    elif mois == 'May':
+        mois = '05'
+    elif mois == 'Apr':
+        mois = '04'
+    elif mois == 'Mar':
+        mois = '03'
+    elif mois == 'Feb':
+        mois = '02'
+    elif mois == 'Jan':
+        mois = '01'
     return date[4:6]+'/'+mois
 
 def formatVolume(volume):
