@@ -1,5 +1,7 @@
 import json
 import math
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 class Volume:
 
@@ -9,6 +11,10 @@ class Volume:
         self.dataVol = dataVol[::-1] # on inverse la liste pour avoir les dates les plus anciennes d'abord
         self.dataSort = sorted(self.dataVol, key = lambda x:x[1]) # tri croissant en fonction du volume
         self.nbVal = len(self.dataSort)
+
+        self.x = [self.dataVol[i][0] for i in range(self.nbVal)]
+        self.y = [self.dataVol[j][1] for j in range(self.nbVal)]
+
 
         self.moyenne = self.moyenne()
         self.mediane = self.mediane()
@@ -70,6 +76,23 @@ class Volume:
 
         return var/self.nbVal
 
+    def showDailyGraph(self):
+
+        plt.close('all')
+        fig, ax = plt.subplots()
+        fig.autofmt_xdate()
+
+        plt.xlabel('Date (jour/mois)')
+        plt.ylabel('Volume')
+
+        ax.plot(self.y, 'rx')
+        plt.xticks(range(self.nbVal), self.x)
+
+        print(self.y)
+
+        plt.show()
+        return
+
     def getInfo(self):
         return {"Moyenne" : self.moyenne,
                 "Mediane" : self.mediane,
@@ -82,4 +105,4 @@ class Volume:
                 "Ecart-type" : int(self.ecartType)}
 
 vol = Volume()
-print(vol.getInfo())
+vol.showHist()
