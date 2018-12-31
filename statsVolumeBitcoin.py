@@ -1,7 +1,7 @@
 import json
 import math
 import matplotlib.pyplot as plt
-import seaborn as sns
+import numpy as np
 
 class Volume:
 
@@ -14,7 +14,6 @@ class Volume:
 
         self.x = [self.dataVol[i][0] for i in range(self.nbVal)]
         self.y = [self.dataVol[j][1] for j in range(self.nbVal)]
-
 
         self.moyenne = self.moyenne()
         self.mediane = self.mediane()
@@ -76,12 +75,29 @@ class Volume:
 
         return var/self.nbVal
 
+    def infoDistrib(self):
+
+        """Retourne les effectifs observes"""
+
+        n, bins, patches = plt.hist(self.y)
+        plt.close('all')
+        return (n, bins)
+
+    def chi2(self):
+
+        """Test d'ajustement à une loi normale"""
+
+        effectifObs, categories = self.infoDistrib()
+
+        return
+
     def showDailyGraph(self):
 
         plt.close('all')
         fig, ax = plt.subplots()
         fig.autofmt_xdate()
 
+        plt.title('Volume journalier entre le 28/11/2018 et le 28/12/2018')
         plt.xlabel('Date (jour/mois)')
         plt.ylabel('Volume')
 
@@ -91,6 +107,23 @@ class Volume:
         print(self.y)
 
         plt.show()
+        return
+
+    def showHist(self):
+        plt.title(r'Histogramme du volume : $\mu={}$, $\sigma={}$'.format("{:.3E}".format(int(self.moyenne)), "{:.3E}".format(int(self.ecartType))))
+        n, bins, patches = plt.hist(self.y, facecolor='#ff7400', alpha=0.8)
+
+        x = np.linspace(self.moyenne - 3*self.ecartType, self.moyenne + 3*self.ecartType, 100)
+        y = ""
+
+        # remise à l'échelle de la loi normale ayant les même paramètres (moyenne et écart type) que la distribution
+        for i in range(100):
+            y[i] *= self.moyenne*3.5
+
+        plt.plot(x, y, 'r--', alpha=0.8)
+
+        plt.show()
+
         return
 
     def getInfo(self):
