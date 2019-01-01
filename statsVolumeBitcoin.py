@@ -2,6 +2,7 @@ import json
 import math
 import matplotlib.pyplot as plt
 import numpy as np
+from operationsLoiNormale import *
 
 class Volume:
 
@@ -77,19 +78,42 @@ class Volume:
 
     def infoDistrib(self):
 
-        """Retourne les effectifs observes"""
+        """Retourne les effectifs observes dans chaque catégorie et les valeurs de ces catégories"""
 
         n, bins, patches = plt.hist(self.y)
         plt.close('all')
-        return (n, bins)
+        # retour sous forme de liste pour pouvoir travailler sur ces listes (concaténation de liste notamment)
+        return (n.tolist(), bins.tolist())
 
     def chi2(self):
 
         """Test d'ajustement à une loi normale"""
 
-        effectifObs, categories = self.infoDistrib()
+        def calcDist(obs, att):
+            # calcule la distance entre effectifs attendus et effectifs observés
+            sommeDist = 0
+            for i in range(len(att)):
+                sommeDist += ((obs[i]-att[i])**2)/att[i]
+            return sommeDist
 
-        return
+        effectifObs, categories = self.infoDistrib()
+        nbCategories = len(effectifObs)
+
+        effectifsTh = [0]*nbCategories
+        for i in range(nbCategories):
+            effectifsTh[i] = calcProba(categories[i+1], categories[i], self.moyenne, self.ecartType) * self.nbVal
+
+        # Ajout des deux valeurs observées extrêmes, égales à 0
+        effectifObs = [0]+effectifObs+[0]
+        # Ajout de la valeur théorique pour la catégorie allant de -inf à categories[0], on considère qu'on a 100% des valeurs dans l'intervalle [mu-10*sigma ; mu+10*sigma]
+        effectifsTh.insert(0, calcProba(categories[0], self.moyenne-10*self.ecartType, self.moyenne, self.ecartType) * self.nbVal)
+        # Ajout de la valeur théorique pour la catégorie allant de categories[-1] à +inf, il s'agit en fait du nombre total de valeur auquel on soustrait la somme des effectifs précédemment calculés
+        effectifsTh.append(self.nbVal - sum(effectifsTh))
+
+        T = calcDist(effectifObs, effectifsTh)
+        degLbte = self.nbVal - 3 # -3 car -2 (mu et sigma) et -1
+
+        return (T, degLbte)
 
     def showDailyGraph(self):
 
@@ -114,14 +138,13 @@ class Volume:
         n, bins, patches = plt.hist(self.y, facecolor='#ff7400', alpha=0.8)
 
         x = np.linspace(self.moyenne - 3*self.ecartType, self.moyenne + 3*self.ecartType, 100)
-        y = ""
+        y = densiteLoiNormale(x, self.moyenne, self.ecartType)
 
-        # remise à l'échelle de la loi normale ayant les même paramètres (moyenne et écart type) que la distribution
-        for i in range(100):
-            y[i] *= self.moyenne*3.5
+        # remise à l'échelle de la loi normale ayant les même paramètres (moyenne et écart type) que la distribution pour pouvoir les comparer à vue d'oeil
+        for i in range(len(x)):
+            y[i] *= self.moyenne*3.2
 
         plt.plot(x, y, 'r--', alpha=0.8)
-
         plt.show()
 
         return
@@ -138,4 +161,4 @@ class Volume:
                 "Ecart-type" : int(self.ecartType)}
 
 vol = Volume()
-vol.showHist()
+vol.chi2()
