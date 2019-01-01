@@ -1,0 +1,6 @@
+json
+math
+numpy
+bs4
+requests
+matplotlib
