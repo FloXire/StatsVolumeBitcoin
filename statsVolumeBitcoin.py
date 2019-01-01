@@ -113,6 +113,14 @@ class Volume:
         T = calcDist(effectifObs, effectifsTh)
         degLbte = self.nbVal - 3 # -3 car -2 (mu et sigma) et -1
 
+        print(
+        """
+        Résultats du test d'adéquation du X²
+        Distance totale entre les effectifs attendus et les effectifs observés si la distribution suit une loi normale : {}
+        Nombre de degrés de liberté : {}
+        """.format(T, degLbte)
+        )
+
         return (T, degLbte)
 
     def showDailyGraph(self):
@@ -150,6 +158,21 @@ class Volume:
         return
 
     def getInfo(self):
+
+        print(
+        """
+        Moyenne : {}
+        Mediane : {}
+        Quartile 1: {}
+        Quartile 3 : {}
+        Etendue : {}
+        Minimum : {}
+        Maximum : {}
+        Variance : {}
+        Ecart-type : {}
+        """.format(self.moyenne, self.mediane, self.quartiles[0], self.quartiles[1], self.etendue, self.min, self.max, self.variance, int(self.ecartType))
+        )
+
         return {"Moyenne" : self.moyenne,
                 "Mediane" : self.mediane,
                 "Quartile 1": self.quartiles[0],
@@ -159,6 +182,3 @@ class Volume:
                 "Maximum" : self.max,
                 "Variance" : self.variance,
                 "Ecart-type" : int(self.ecartType)}
-
-vol = Volume()
-vol.chi2()
