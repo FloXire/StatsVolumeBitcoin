@@ -86,7 +86,7 @@ class Volume:
         # retour sous forme de liste pour pouvoir travailler sur ces listes (concaténation de liste notamment)
         return (n.tolist(), bins.tolist())
 
-    def chi2(self):
+    def khi2(self):
 
         """Test d'ajustement à une loi normale"""
 
