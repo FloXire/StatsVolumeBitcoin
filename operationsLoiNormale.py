@@ -15,9 +15,9 @@ def probaNormCentreeReduite(x):
         return 0.5
 
     u = abs(x)
-    # nombre de rectangles, on en veut à peu près un tous les 0.00001 en abscisse
-    n = int(u/0.00001)
-    # largeur d'un rectangle (pas exactement égal à 0.00001 car on a un nombre entier de rectangles)
+    # nombre de rectangles, on en veut à peu près un tous les 0.0001 en abscisse
+    n = int(u/0.0001)
+    # largeur d'un rectangle (pas exactement égal à 0.0001 car on a un nombre entier de rectangles)
     du = u/n
 
     integrale = 0
@@ -43,3 +43,14 @@ def probaNormCentreeReduite(x):
         integrale = 1-integrale
 
     return integrale
+
+def centreEtReduit(x, mu, sigma):
+    return (x-mu)/sigma
+
+def calcProba(a, b, mu, sigma):
+
+    """Renvoie la probabilité d'être entre a et b"""
+
+    borneSup = probaNormCentreeReduite(centreEtReduit(a, mu, sigma))
+    borneInf = probaNormCentreeReduite(centreEtReduit(b, mu, sigma))
+    return borneSup-borneInf
