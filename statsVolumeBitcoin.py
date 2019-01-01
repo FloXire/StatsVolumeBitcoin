@@ -3,6 +3,7 @@ import math
 import matplotlib.pyplot as plt
 import numpy as np
 from operationsLoiNormale import *
+import getData
 
 class Volume:
 
@@ -136,8 +137,6 @@ class Volume:
         ax.plot(self.y, 'rx')
         plt.xticks(range(self.nbVal), self.x)
 
-        print(self.y)
-
         plt.show()
         return
 
@@ -158,6 +157,11 @@ class Volume:
         return
 
     def getInfo(self):
+
+        def formatDate(date):
+            return date[:4] + '-' + date[4:6] + '-' + date[6:]
+
+        print("Volume journalier observé du {} au {} : {}".format(formatDate(getData.dateDebut), formatDate(getData.datefin), self.dataVol))
 
         print(
         """
