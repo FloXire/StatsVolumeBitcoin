@@ -1,14 +1,13 @@
-# StatsVolumeBitcoin
-Analyse statistique du volume du bitcoin entre le 28/11/2018 et le 28/12/2018
+# Statistiques : le volume du bitcoin
+_Analyse statistique du volume du bitcoin entre le 28/11/2018 et le 28/12/2018_
 
-Statistiques : le volume du bitcoin
+La branche master contient le code permettant d'extrapoler à d'autres intervalles de temps. \
+La branche OneYearOfData est un test pour voir si oui ou non, lorsque l'on retire les 10% des valeurs les plus fortes, la distribution suit une loi normale au sens du test du X² (ce n'est pas le cas avec ces 10% de valeurs).
 
 Les données ont été récoltées sur coinmarketcap, site référençant notamment le volume d’échange total journalier du bitcoin sur l’ensemble des plateformes d’échange mondial.
 
 Lien utilisé pour extraire les données :
 https://coinmarketcap.com/currencies/bitcoin/historical-data/?start=20181128&end=20181228
-
-L’extraction des données et les calculs des éléments d’analyse statistique (moyenne, écart type, test du X² etc) ont été réalisés en python. Le code est disponible sur mon répertoire github à l’adresse suivante : https://github.com/FloXire/StatsVolumeBitcoin 
 
 Voici les résultat bruts obtenus après l’analyse :
 
@@ -25,6 +24,6 @@ Volume journalier observé du 2018-11-28 au 2018-12-28 :
         Variance : 1.2789186677716534e+18
         Ecart-type : 1130892863
 
-Résultats du test d'adéquation du X²
-Distance totale entre les effectifs attendus et les effectifs observés si la distribution suit une 	loi normale : 12.949518779230953.
+Résultats du test d'adéquation du X² : \
+Distance totale entre les effectifs attendus et les effectifs observés si la distribution suit une loi normale : 12.949518779230953. \
 Nombre de degrés de liberté : 28.
