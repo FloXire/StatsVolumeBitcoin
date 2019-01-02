@@ -5,6 +5,6 @@ if __name__ == "__main__":
     donnees = Volume()
 
     donnees.getInfo()
-    donnees.showDailyGraph()
+    #donnees.showDailyGraph()
     donnees.showHist()
     donnees.khi2()

@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import json
 
-dateDebut = "20181128"
+dateDebut = "20171228"
 datefin = "20181228"
 url = "https://coinmarketcap.com/currencies/bitcoin/historical-data/?start={}&end={}".format(dateDebut, datefin)
 content = requests.get(url).content

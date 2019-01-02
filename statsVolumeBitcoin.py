@@ -11,11 +11,12 @@ class Volume:
         file = open("data.JSON", 'r')
         dataVol = json.load(file)
         self.dataVol = dataVol[::-1] # on inverse la liste pour avoir les dates les plus anciennes d'abord
-        self.dataSort = sorted(self.dataVol, key = lambda x:x[1]) # tri croissant en fonction du volume
+        self.dataSort = sorted(self.dataVol, key = lambda x:x[1])[:len(dataVol)-30] # tri croissant en fonction du volume
+        print(self.dataSort)
         self.nbVal = len(self.dataSort)
 
         self.x = [self.dataVol[i][0] for i in range(self.nbVal)]
-        self.y = [self.dataVol[j][1] for j in range(self.nbVal)]
+        self.y = [self.dataSort[j][1] for j in range(self.nbVal)]
 
         self.moyenne = self.moyenne()
         self.mediane = self.mediane()
@@ -73,7 +74,7 @@ class Volume:
     def variance(self):
         var = 0
         for i in range(self.nbVal):
-            var += (self.dataVol[i][1]-self.moyenne)**2
+            var += (self.dataSort[i][1]-self.moyenne)**2
 
         return var/self.nbVal
 
@@ -142,16 +143,16 @@ class Volume:
 
     def showHist(self):
         plt.title(r'Histogramme du volume : $\mu={}$, $\sigma={}$'.format("{:.3E}".format(int(self.moyenne)), "{:.3E}".format(int(self.ecartType))))
-        n, bins, patches = plt.hist(self.y, facecolor='#ff7400', alpha=0.8)
+        n, bins, patches = plt.hist(self.y, bins=100, facecolor='#ff7400', alpha=0.8)
 
-        x = np.linspace(self.moyenne - 3*self.ecartType, self.moyenne + 3*self.ecartType, 100)
+        """x = np.linspace(self.moyenne - 2*self.ecartType, self.moyenne + 2*self.ecartType, 100)
         y = densiteLoiNormale(x, self.moyenne, self.ecartType)
 
         # remise à l'échelle de la loi normale ayant les même paramètres (moyenne et écart type) que la distribution pour pouvoir les comparer à vue d'oeil
         for i in range(len(x)):
             y[i] *= self.moyenne*3.2
 
-        plt.plot(x, y, 'r--', alpha=0.8)
+        plt.plot(x, y, 'r--', alpha=0.8)"""
         plt.show()
 
         return
