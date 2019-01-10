@@ -112,7 +112,7 @@ class Volume:
         effectifsTh.append(self.nbVal - sum(effectifsTh))
 
         T = calcDist(effectifObs, effectifsTh)
-        degLbte = self.nbVal - 3 # -3 car -2 (mu et sigma) et -1
+        degLbte = nbCategories+2 - 3 # -3 car -2 (mu et sigma) et -1
 
         print(
         """
